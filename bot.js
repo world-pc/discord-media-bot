@@ -14,4 +14,8 @@ client.on('interactionCreate', async interaction => {
     if(interaction.commandName === 'hello') {
         await interaction.reply('hi hi! <|°ᴗ°|>')
     }
-}
+    else if(interaction.commandName === 'play') {
+        const song_name = interaction.options.getString('song_name');
+        await interaction.reply(`it seems u wanted to play "${song_name}"`)
+    }
+});

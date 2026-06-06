@@ -4,7 +4,15 @@ import {REST, Routes, SlashCommandBuilder} from 'discord.js';
 const commands = [
     new SlashCommandBuilder()
         .setName('hello')
-        .setDescription('say hi to bot')
+        .setDescription('say hi to media bot'),
+
+    new SlashCommandBuilder()
+        .setName('play')
+        .setDescription('play a song, should we have it.')
+        .addStringOption(option => 
+            option.setName('song_name')
+                  .setDescription('name of song to play.')
+                  .setRequired(true))
 ].map(cmd => cmd.toJSON());
 
 const rest = new REST().setToken(process.env.DISCORD_TOKEN)
