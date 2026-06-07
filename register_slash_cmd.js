@@ -5,6 +5,10 @@ const commands = [
     new SlashCommandBuilder()
         .setName('hello')
         .setDescription('say hi to media bot'),
+    
+    new SlashCommandBuilder()
+        .setName('soundlist')
+        .setDescription('outputs the list of available sounds for /play'),
 
     new SlashCommandBuilder()
         .setName('play')

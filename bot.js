@@ -15,6 +15,9 @@ client.on('interactionCreate', async interaction => {
     if(interaction.commandName === 'hello') {
         await interaction.reply('hi hi! <|°ᴗ°|>')
     }
+    else if(interaction.commandName === 'soundlist') {
+        await interaction.reply("available sounds are:\n\n'hellnah'\n'bruh'");
+    }
     else if(interaction.commandName === 'play') {
         const song_name = interaction.options.getString('song_name');
 
