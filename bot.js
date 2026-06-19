@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import {Client, GatewayIntentBits} from 'discord.js';
-import {joinVoiceChannel, createAudioPlayer, createAudioResource} from '@discordjs/voice';
+import { joinVoiceChannel, createAudioPlayer, 
+    createAudioResource, AudioPlayerStatus } from '@discordjs/voice';
 
 const client = new Client({intents: [GatewayIntentBits.Guilds,
                                      GatewayIntentBits.GuildVoiceStates]});
@@ -28,19 +29,22 @@ client.on('interactionCreate', async interaction => {
             await interaction.reply('ur not in a voice channel :(');
             return;
         }
+        else {
+            await interaction.reply(`playing ${song_name}.wav...`);
 
-        const connection = joinVoiceChannel({
-            channelId: vc.id,
-            guildId: interaction.guildId,
-            adapterCreator: interaction.guild.voiceAdapterCreator
-        });
+            const connection = joinVoiceChannel({
+                channelId: vc.id,
+                guildId: interaction.guildId,
+                adapterCreator: interaction.guild.voiceAdapterCreator
+            });
 
-        const player = createAudioPlayer();
-        const resource = createAudioResource(`./sounds/${song_name}.wav`);
+            const player = createAudioPlayer();
+            const resource = createAudioResource(`./sounds/${song_name}.wav`);
 
-        player.play(resource);
-        connection.subscribe(player);
+            player.play(resource);
+            connection.subscribe(player);
 
-        await interaction.reply(`playing ${song_name}.wav...`);
+            player.on(AudioPlayerStatus.Idle, () => connection.destroy());
+        }
     }
 });
