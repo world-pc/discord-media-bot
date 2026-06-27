@@ -17,7 +17,7 @@ client.on('interactionCreate', async interaction => {
         await interaction.reply('hi hi! <|°ᴗ°|>')
     }
     else if(interaction.commandName === 'soundlist') {
-        await interaction.reply("available sounds are:\n\n'hellnah'\n'bruh'");
+        await interaction.reply("available sounds are:\n\n'hellnah'\n'bruh'\n'gasolina'");
     }
     else if(interaction.commandName === 'play') {
         const song_name = interaction.options.getString('song_name');
@@ -44,7 +44,7 @@ client.on('interactionCreate', async interaction => {
             player.play(resource);
             connection.subscribe(player);
 
-            player.on(AudioPlayerStatus.Idle, () => connection.destroy());
+            //player.on(AudioPlayerStatus.Idle, () => connection.destroy());
         }
     }
 });
