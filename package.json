@@ -1,7 +1,10 @@
 {
   "dependencies": {
     "@discordjs/voice": "^0.19.2",
+    "child_process": "^1.0.2",
     "discord.js": "^14.26.4",
-    "dotenv": "^17.4.2"
+    "dotenv": "^17.4.2",
+    "fs": "^0.0.1-security",
+    "os": "^0.1.2"
   }
 }
