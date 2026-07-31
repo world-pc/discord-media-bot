@@ -27,7 +27,7 @@ async function textToSpeech(message) {
         console.error('stdout:', err.stdout);
     }
 
-    //fs.unlink('./tts_files/msg.txt');
+    fs.unlink('./tts_files/msg.txt');
 }
 
 export default {textToSpeech};
