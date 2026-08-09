@@ -1,3 +1,5 @@
 .env
 node_modules/
 sounds/
+logs/
+tts_files/
