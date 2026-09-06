@@ -3,6 +3,7 @@ import fs from 'fs/promises'
 import os from 'os'
 import path from 'path'
 import tts from './tts.js'
+import sb from './soundboard.js'
 
 import {Client, GatewayIntentBits} from 'discord.js';
 import { joinVoiceChannel, createAudioPlayer, 
@@ -46,18 +47,7 @@ client.on('interactionCreate', async interaction => {
                                     /vc_tts <message>`);
     }
     else if(interaction.commandName === 'soundlist') {
-        const available_sounds = [
-            'hellnah',
-            'bruh',
-            'gasolina',
-            'masterchief',
-            'potatoes',
-            'doorstop',
-            'scratch',
-            'fart',
-            'archangels',
-            'fanfare'];
-        await interaction.reply(`available sounds are: \n${available_sounds.join('\n')}`);
+        sb.printSoundList(interaction);
     }
     else if(interaction.commandName === 'play') {
         const song_name = interaction.options.getString('song_name');
