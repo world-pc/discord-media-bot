@@ -75,8 +75,8 @@ client.on('interactionCreate', async interaction => {
                 player.play(resource);
                 connection.subscribe(player);
 
-                player.on(AudioPlayerStatus.Playing, () => setIdleTimeout(connection));
-                player.on(AudioPlayerStatus.Idle, () => clearIdleTimeout());
+		player.on(AudioPlayerStatus.Idle, () => setIdleTimeout(connection));
+		player.on(AudioPlayerStatus.Playing, () => clearIdleTimeout());
             }
             catch(err) {
                 console.error("songs, something went wrong: ", err);
