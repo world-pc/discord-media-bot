@@ -2,8 +2,11 @@ import 'dotenv/config'
 import fs from 'fs/promises'
 import os from 'os'
 import path from 'path'
+import { DatabaseSync} from 'node:sqlite'
+
 import tts from './tts.js'
 import sb from './soundboard.js'
+import mc from './music.js'
 
 import {Client, GatewayIntentBits} from 'discord.js';
 import { joinVoiceChannel, createAudioPlayer, 
@@ -23,7 +26,7 @@ function clearIdleTimeout() {
     }
 }
 
-
+//connect to discord server
 const client = new Client({intents: [GatewayIntentBits.Guilds,
                                      GatewayIntentBits.GuildVoiceStates]});
 
@@ -129,8 +132,54 @@ client.on('interactionCreate', async interaction => {
             }
         }
     }
+    else if(interaction.commandName == 'music') {
+        const title = interaction.options.getString('title');
+        const artist = interaction.options.getString('artist') ?? "n/a";
+        const album = interaction.options.getString('album') ?? "n/a";
+
+        const filepath = mc.getMusicFilepath(title, artist, album);
+
+        if(filepath) {
+            const member = interaction.member;
+            const vc = member.voice.channel;
+
+            if(!vc) {
+                await interaction.reply('ur not in a voice channel :(');
+                return;
+            }
+            else {
+                try {
+                    await interaction.reply(`playing ${filepath}...`);
+
+                    const connection = joinVoiceChannel({
+                        channelId: vc.id,
+                        guildId: interaction.guildId,
+                        adapterCreator: interaction.guild.voiceAdapterCreator
+                    });
+
+                    const player = createAudioPlayer();
+                    const resource = createAudioResource(filepath);
+
+                    player.play(resource);
+                    connection.subscribe(player);
+
+                    player.on(AudioPlayerStatus.Playing, () => setIdleTimeout(connection));
+                    player.on(AudioPlayerStatus.Idle, () => clearIdleTimeout());
+                }
+                catch(err) {
+                    console.error("something went wrong: ", err);
+                }
+            }
+        }
+        else {
+            await interaction.reply('couldnt find the requested piece :\\');
+            return;
+        }
+    }
 });
 
+
+//connection info stuff
 client.on('shardDisconnect', (event, shard_id) => {
     console.log(`shard {shard_id} disconnected. code: {event.code}, reason: '{event.reason}'`);
 });

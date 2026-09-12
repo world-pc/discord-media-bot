@@ -28,7 +28,24 @@ const commands = [
         .addStringOption(option =>
             option.setName('message')
                   .setDescription('message u would like to speak.')
+                  .setRequired(true)),
+
+    new SlashCommandBuilder()
+        .setName('music')
+        .setDescription('play some music.')
+        .addStringOption(option =>
+            option.setName('title')
+                  .setDescription('title of the song u would like to play.')
                   .setRequired(true))
+        .addStringOption(option =>
+            option.setName('artist')
+                  .setDescription('artist for song u would like to play.')
+                  .setRequired(false))
+        .addStringOption(option =>
+            option.setName('album')
+                  .setDescription('album the song\'s on.')
+                  .setRequired(false))
+
 
 ].map(cmd => cmd.toJSON());
 
