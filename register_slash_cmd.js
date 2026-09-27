@@ -44,7 +44,11 @@ const commands = [
         .addStringOption(option =>
             option.setName('album')
                   .setDescription('album the song\'s on.')
-                  .setRequired(false))
+                  .setRequired(false)),
+
+    new SlashCommandBuilder()
+        .setName('musiclist')
+        .setDescription('print music library.')
 
 
 ].map(cmd => cmd.toJSON());
