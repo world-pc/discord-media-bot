@@ -12,7 +12,7 @@ import {Client, GatewayIntentBits} from 'discord.js';
 import { joinVoiceChannel, createAudioPlayer, 
     createAudioResource, AudioPlayerStatus } from '@discordjs/voice';    
 
-let idle_timeout = null; //stores the timeout object for disconnecting after some amount of idle time in vca
+let idle_timeout = null; //stores the timeout object for disconnecting after some amount of idle time in vc
 let timeout_time = 15 * 60 * 1000; // 15 minutes
 function setIdleTimeout(connection) {
     idle_timeout = setTimeout(() => {
@@ -176,30 +176,41 @@ client.on('interactionCreate', async interaction => {
             return;
         }
     }
+    else if(interaction.commandName == 'musiclist') {
+        await interaction.reply(mc.getMusicList());
+    }
 });
 
+function debugCallbacks(client) {
+    //connection info stuff
+    client.on('shardDisconnect', (event, shard_id) => {
+        console.log(`shard {shard_id} disconnected. code: {event.code}, reason: '{event.reason}'`);
+    });
 
-//connection info stuff
-client.on('shardDisconnect', (event, shard_id) => {
-    console.log(`shard {shard_id} disconnected. code: {event.code}, reason: '{event.reason}'`);
-});
+    client.on('shardReconnecting', (shard_id) => {
+        console.log(`shard {shard_id} reconnecting...`);
+    });
 
-client.on('shardReconnecting', (shard_id) => {
-    console.log(`shard {shard_id} reconnecting...`);
-});
+    client.on('shardResume', (shard_id, replayed_events) => {
+        console.log(`resuming shard {shard_id}. replaying events {replayed_events}`);
+    });
 
-client.on('shardResume', (shard_id, replayed_events) => {
-    console.log(`resuming shard {shard_id}. replaying events {replayed_events}`);
-});
+    client.on('shardError', (error, shard_id) => {
+        console.error(`shard {shard_id} error: `, error);
+    });
 
-client.on('shardError', (error, shard_id) => {
-    console.error(`shard {shard_id} error: `, error);
-});
+    process.on('uncaughtException', (err) => {
+        console.error('uncaught exception: ', err);
+    });
 
-process.on('uncaughtException', (err) => {
-    console.error('uncaught exception: ', err);
-});
+    process.on('unhandledRejection', (reason, promise) => {
+        console.error('unhandled rejection at ', promise, ' reason: ', reason);
+    });
+}
 
-process.on('unhandledRejection', (reason, promise) => {
-    console.error('unhandled rejection at ', promise, ' reason: ', reason);
-});
+function main() {
+    //const client = setupClient();
+    debugCallbacks(client);
+}
+
+main(); 
