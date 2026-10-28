@@ -33,7 +33,7 @@ function getMusicList() {
             ret_str += '        '+ album.album + '\n';
 
             const title_query = music_db.prepare(
-                `SELECT title from pieces WHERE artist = '${artist.artist}' AND album = '${album.album}'`;
+                `SELECT title from pieces WHERE artist = '${artist.artist}' AND album = '${album.album}'`
             );
             const titles = title_query.all();
 
