@@ -183,6 +183,9 @@ client.on('interactionCreate', async interaction => {
     else if (interaction.commandName == 'eventlist') {
         await interaction.reply(ev.getEventList());
     }
+    else if (interaction.commandName == 'timeuntil') {
+        await interaction.reply(ev.timeUntil( interaction.options.getString('title') ));
+    }
 });
 
 function debugCallbacks(client) {

@@ -52,7 +52,15 @@ const commands = [
 
     new SlashCommandBuilder()
         .setName('eventlist')
-        .setDescription('print event list.')
+        .setDescription('print event list.'),
+
+    new SlashCommandBuilder()
+        .setName('timeuntil')
+        .setDescription('print time until given event')
+        .addStringOption(option =>
+            option.setName('title')
+                  .setDescription('title of event.')
+                  .setRequired(true)),
 
 
 ].map(cmd => cmd.toJSON());
