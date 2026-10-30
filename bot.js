@@ -7,6 +7,7 @@ import { DatabaseSync} from 'node:sqlite'
 import tts from './tts.js'
 import sb from './soundboard.js'
 import mc from './music.js'
+import ev from './events.js'
 
 import {Client, GatewayIntentBits} from 'discord.js';
 import { joinVoiceChannel, createAudioPlayer, 
@@ -178,6 +179,9 @@ client.on('interactionCreate', async interaction => {
     }
     else if(interaction.commandName == 'musiclist') {
         await interaction.reply(mc.getMusicList());
+    }
+    else if (interaction.commandName == 'eventlist') {
+        await interaction.reply(ev.getEventList());
     }
 });
 

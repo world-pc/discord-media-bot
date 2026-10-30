@@ -48,7 +48,11 @@ const commands = [
 
     new SlashCommandBuilder()
         .setName('musiclist')
-        .setDescription('print music library.')
+        .setDescription('print music library.'),
+
+    new SlashCommandBuilder()
+        .setName('eventlist')
+        .setDescription('print event list.')
 
 
 ].map(cmd => cmd.toJSON());
