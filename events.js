@@ -54,7 +54,7 @@ function timeUntil(given_title) {
         return `sorry, couldn't find an event matching '${given_title}'`;
     }
     else {
-        let ce_date = new Date(chosen_event.date+'T'+chosen_event.time+'Z');
+        let ce_date = new Date(chosen_event.date+'T'+chosen_event.time);
         let timeDiff = ce_date - new Date();
 
         const days = Math.floor(timeDiff / 1000 / 60 / 60 / 24);
