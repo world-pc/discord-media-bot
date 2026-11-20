@@ -15,7 +15,7 @@ function getEventList() {
     const events = _getEvents();
 
     for (const eventt of events) {
-        ret_str += eventt.title+'\n';
+        ret_str += `[${eventt.date}] ${eventt.title}\n`;
     }
 
     return ret_str;
